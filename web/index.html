@@ -2,11 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>ComfyUI</title>
+		<title>ComfyUI Thumbnail</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<link rel="stylesheet" type="text/css" href="./lib/litegraph.css" />
 		<link rel="stylesheet" type="text/css" href="./style.css" />
 		<link rel="stylesheet" type="text/css" href="./user.css" />
+		<link rel="stylesheet" type="text/css" href="./file_loader.css" />
 		<script type="text/javascript" src="./lib/litegraph.core.js"></script>
 		<script type="text/javascript" src="./lib/litegraph.extensions.js" defer></script>
 		<script type="module">
@@ -43,6 +44,17 @@
 					</footer>
 				</form>
 			</main>
+		</div>
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close" onclick="document.getElementById('myModal').style.display = 'none';">&times;</span>
+				<h2>Select an Item</h2>
+				<div id="itemList"></div>
+			</div>
+	
 		</div>
 	</body>
 </html>

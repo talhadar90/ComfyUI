@@ -582,7 +582,72 @@ export class ComfyUI {
 					});
 				},
 			}),
-			$el("button", {id: "comfy-load-button", textContent: "Load", onclick: () => fileInput.click()}),
+			$el("button", {id: "comfy-load-button", textContent: "Load", onclick: async () => {
+			const hostname = window.location.hostname;
+			const workFlowHost = `http://${hostname}:8000/getworkflows`;
+			console.log('Getting workflows from: ', workFlowHost)
+
+			// Function to fetch data and populate the selector
+			function fetchDataAndPopulateSelector() {
+				const hostname = window.location.hostname;
+				const apiEndpoint = workFlowHost;
+	
+				fetch(apiEndpoint)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.json();
+					})
+					.then(data => {
+						console.log('Got list: ', data);
+						populateModal(data);
+						openModal(); // Open the modal after populating options
+					})
+					.catch(error => {
+						console.error('There was a problem with the fetch operation:', error);
+					});
+			}
+			fetchDataAndPopulateSelector(); // Fetch data and populate selector when modal is opened
+			
+			// Function to populate the modal with list items
+			function populateModal(jsonData) {
+				const itemList = document.getElementById('itemList');
+				itemList.innerHTML = '';
+	
+				jsonData.forEach(entry => {
+					const listItem = document.createElement('div');
+					listItem.classList.add('list-item');
+					listItem.textContent = entry.info.title;
+					listItem.addEventListener('click', () => {
+						app.handleJSON(entry.data);
+						closeModal();
+					});
+					itemList.appendChild(listItem);
+				});
+			}
+
+			// Function to open the modal
+			function openModal() {
+				const modal = document.getElementById('myModal');
+				modal.style.display = 'block';
+			}
+	
+			// Function to close the modal
+			function closeModal() {
+				document.getElementById('myModal').style.display = 'none';
+			}
+	
+			// Close the modal when the user clicks outside of it
+			window.onclick = function(event) {
+				const modal = document.getElementById('myModal');
+				if (event.target == modal) {
+					closeModal();
+				}
+			}
+			}
+			//fileInput.click()
+		}),
 			$el("button", {
 				id: "comfy-refresh-button",
 				textContent: "Refresh",

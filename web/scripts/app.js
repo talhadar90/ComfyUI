@@ -2082,6 +2082,17 @@ export class ComfyApp {
 		api.dispatchEvent(new CustomEvent("promptQueued", { detail: { number, batchCount } }));
 	}
 
+	async handleJSON(jsonContent){
+		console.log("handleJSON:", jsonContent)
+				if (jsonContent?.templates) {
+					this.loadTemplateData(jsonContent);
+				} else if(this.isApiJson(jsonContent)) {
+					this.loadApiJson(jsonContent);
+				} else {
+					await this.loadGraphData(jsonContent);
+				}
+	}
+
 	/**
 	 * Loads workflow data from the specified file
 	 * @param {File} file
