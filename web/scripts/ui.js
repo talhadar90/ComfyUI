@@ -5,6 +5,7 @@ import { ComfySettingsDialog } from "./ui/settings.js";
 
 export const ComfyDialog = _ComfyDialog;
 
+
 /**
  * 
  * @param { string } tag HTML Element Tag and optional classes e.g. div.class1.class2
